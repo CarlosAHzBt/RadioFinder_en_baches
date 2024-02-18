@@ -2,11 +2,12 @@
 from BagFile import BagFile
 import os
 
+import concurrent.futures
 
 class ProcesadorBags:
     def __init__(self, bag_files_path):
         self.bag_files_path = bag_files_path
-        self.bag_files = self.get_bag_files()
+        #self.bag_files = self.get_bag_files()
 
     def get_bag_files(self):
         """
@@ -25,3 +26,10 @@ class ProcesadorBags:
         print("Bags Procesados---------------------------------")
 
 
+    def process_bag_file(self, bag_file_path):
+        """
+        Procesa un archivo .bag.
+        """
+        bag_file_path = f"{self.bag_files_path}/{bag_file_path}"
+        bag = BagFile(bag_file_path,"ArchivosDeLaExtraccion")
+        bag.process_bag_file()

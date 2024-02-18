@@ -3,16 +3,16 @@ from AdministradorDeArchivos import AdministradorArchivos
 from ModeloSegmentacion import ModeloSegmentacion
 from CargarModelo import CargarModelo
 from Bache import Bache
+import concurrent.futures
+import os
 
-def extraer_datos_de_bags(ruta_carpeta_bags):
-    procesador_bags = ProcesadorBags(ruta_carpeta_bags)
-    procesador_bags.process_bag_files()
-    print("Extracción de datos de archivos .bag completada.")
 
-def procesar_imagenes(carpeta_base):
-    lista_baches = []
+def cargar_modelo():
     modelo = CargarModelo()
     modelo_entrenado = modelo.cargar_modelo("RutaModelo/model_state_dict.pth")
+    return modelo_entrenado
+def procesar_imagenes(carpeta_base):
+
     segmentador = ModeloSegmentacion(modelo_entrenado)
     administrador_archivos = AdministradorArchivos(carpeta_base)
 
@@ -26,7 +26,7 @@ def procesar_imagenes(carpeta_base):
             for bache in baches:
                 bache.calcular_contorno()
                 bache.calcular_radio_maximo()
-                print(f"El radio máximo del bache {bache.id_bache} es {bache.diametro_bache} unidades.")
+                print(f"El radio máximo del bache {bache.id_bache} es {bache.diametro_bache} unidades. Perteneciente al bag {bache.bag_de_origen}.")
                 lista_baches.append(bache)
     return lista_baches
 
@@ -37,16 +37,24 @@ def filtrar_baches_por_radio(baches, diametro_minimo, diamtro_maximo):
 if __name__ == "__main__":
     ruta_carpeta_bags = "bag"
     carpeta_destino = "ArchivosDeLaExtraccion"
-    
-    # Paso 1: Extraer datos de archivos .bag
-    extraer_datos_de_bags(ruta_carpeta_bags)
-    
-    # Paso 2: Procesar imágenes y detección de baches
-    baches = procesar_imagenes(carpeta_destino)
+    lista_baches = []
+    modelo_entrenado = cargar_modelo()
 
+    procesador_bag = ProcesadorBags(ruta_carpeta_bags)
+    lista_bag = procesador_bag.get_bag_files()
+    # Paso 1: Extraer datos de archivos .bag
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        for bag in lista_bag:
+            executor.submit(procesador_bag.process_bag_file, bag)
+
+    # Paso 2: Procesar imágenes y detección de baches
+            #Se podria agregar paralelismo en este paso pero se tiene que cambiar la ruta que se manda ya que se esta mandando la ruta de todos los bags 
+            #Y la ruta de todos los bags se utiliza para darle identificador a los baches y facilitar el acceso a las nubes de puntos e imagenes
+            # por lo que se ocupa hacer varios cambios para poder hacer paralelismo en este paso
+    lista_baches = procesar_imagenes(carpeta_destino)
     # Paso 3: Filtrar baches por radio
-    diametro_minimo = 373.5
-    diametro_maximo = 500
-    baches_filtrados = filtrar_baches_por_radio(baches, diametro_minimo, diametro_maximo)
+    diametro_minimo = 150
+    diametro_maximo = 5000
+    baches_filtrados = filtrar_baches_por_radio(lista_baches, diametro_minimo, diametro_maximo)
 
     print(f"Se encontraron {len(baches_filtrados)} baches con un diámetro entre {diametro_minimo} y {diametro_maximo} unidades.")
