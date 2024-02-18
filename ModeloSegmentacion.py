@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 class ModeloSegmentacion():
     def __init__(self, modelo_entrenado):
-        self.min_area = 800  # Configura esto según tus necesidades
+        self.min_area = 8600  # Configura esto según tus necesidades
         self.modelo = modelo_entrenado
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
