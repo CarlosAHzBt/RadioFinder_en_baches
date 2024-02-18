@@ -1,16 +1,51 @@
 import numpy as np
 import cv2 as cv
+import os
 import matplotlib.pyplot as plt
+from ConvertirPixelesAMetros import ConvertirPixelesAMetros
 
 class Bache:
-    def __init__(self, id_bache, coordenadas=None):
-        self.id_bache = id_bache
-        self.coordenadas = np.array(coordenadas)[:, [1, 0]] if coordenadas is not None else np.empty((0, 2), dtype=int)
-        self.contorno = []
-        self.radio_maximo = 0
-        self.centro_circulo = (0, 0)
+    def __init__(self,bag_de_origen,imagenRGB, coordenadas=None):
         self.imagen_original_shape = 480, 848  # Pasar la forma de la imagen original al inicializar
-    
+        self.bag_de_origen = bag_de_origen
+        self.nube_puntos = None
+        self.imagenRGB = imagenRGB
+        self.coordenadas = np.array(coordenadas)[:, [1, 0]] if coordenadas is not None else np.empty((0, 2), dtype=int)
+        # El id del bache es la ruta de la imagen pero solo el nombre del archivo "rgbimage.png" pero sin la extension
+        self.id_bache = os.path.splitext(os.path.basename(self.imagenRGB))[0]
+        self.radio_maximo = 0
+        self.diametro_bache = 0
+        self.centro_circulo = (0, 0)
+
+        self.ConvPx2M = ConvertirPixelesAMetros()
+        self.altura_captura = 0
+        self.escale_horizontal = 0
+        self.escala_vertical = 0
+
+    def set_id_bache(self):
+        #El id del bache es la ruta de la imagen + el indice de la coordenada
+        pass
+
+    def set_imagenRGB(self):
+        #apartir de la ruta de la bolsa de origen, se obtiene la ruta de la imagen RGB
+        self.imagenRGB = self.bag_de_origen + "/Imagen"       
+    def set_nube_puntos(self):
+        # Construye la ruta de la nube de puntos
+        # Asumiendo que `self.bag_de_origen` es la carpeta que contiene tanto la carpeta 'Imagen' como la carpeta 'PLY'
+        # y que `self.imagenRGB` es solo el nombre del archivo con su extensión
+        
+        nombre_archivo_sin_extension = self.id_bache
+        ruta_nube_puntos = os.path.join(self.bag_de_origen, "PLY", nombre_archivo_sin_extension + ".ply")
+        
+        if os.path.exists(ruta_nube_puntos):
+            self.nube_puntos = ruta_nube_puntos
+        else:
+            print(f"No se encontró la nube de puntos para {self.imagenRGB}")
+
+
+
+
+
     def calcular_contorno(self):
         # Suponiendo que 'self.coordenadas' ya contiene las coordenadas del contorno del bache
         if self.coordenadas.size == 0:
@@ -63,6 +98,24 @@ class Bache:
         if self.radio_maximo == 0:
             raise ValueError("No se encontraron puntos dentro del contorno para calcular el radio máximo.")
         
+
+        self.set_nube_puntos()  # Obtener la ruta de la nube de puntos PLY
+        # Finalmente, convertir el radio máximo de píxeles a metros
+        self.set_altura_captura()   # Consigo la altura de captura de la nube de puntos PLY
+        #altura, anchura = self.imagen_original_shape
+
+        self.ConvPx2M.calcular_escala(self.altura_captura)  # Calculo las escalas de conversión de píxeles a metros basadas en la altura de captura.
+        self.set_escala_horizontal()
+        self.radio_maximo = self.ConvPx2M.convertir_radio_pixeles_a_metros(self.radio_maximo, self.escale_horizontal)
+        
+        #Convertir el radio maximo de a mm
+        self.radio_maximo = self.radio_maximo * 1000
+        #return self.radio_maximo
+
+
+
+
+        
     def dibujar_contorno(self, imagen):
         if self.contorno == []:
             raise ValueError("Contorno no ha sido calculado.")
@@ -79,8 +132,17 @@ class Bache:
         cv.circle(imagen, self.centro_circulo, int(self.radio_maximo), (0, 255, 0), 2)
         return imagen
     
-    def get_bag_de_origen(self):
-        # Devuelve la ruta de la imagen de origen
-        return self.bag_de_origen
+    def set_altura_captura(self):
+        #Aqui mismo hare todo el proceso chsm
+        self.altura_captura = self.ConvPx2M.estimar_altura_de_captura(self.nube_puntos)
+
+    def set_escala_horizontal(self):
+         self.escale_horizontal, self.escala_vertical = self.ConvPx2M.calcular_escala(self.altura_captura)
     
-    # ... otros métodos ...
+    def get_diametro_bache(self):
+        self.diametro_bache = self.radio_maximo * -2
+        return self.diametro_bache
+
+    def get_imagenRGB(self):
+        # Devuelve la ruta de la imagen RGB
+        return self.imagenRGB
