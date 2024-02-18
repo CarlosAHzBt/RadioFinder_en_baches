@@ -18,7 +18,7 @@ class AdministradorArchivos:
 
     def generar_lista_de_imagenes(self, ruta_carpeta_bag):
         # Devuelve una lista de rutas de imágenes dentro de la carpeta "Imagen" de la carpeta bag
-        ruta_carpeta_imagenes = os.path.join(ruta_carpeta_bag, "Imagen")
+        ruta_carpeta_imagenes = os.path.join(ruta_carpeta_bag, "Imagenes")
         imagenes = [os.path.join(ruta_carpeta_imagenes, f) for f in os.listdir(ruta_carpeta_imagenes)
                     if os.path.isfile(os.path.join(ruta_carpeta_imagenes, f)) and f.lower().endswith(('.png', '.jpg', '.jpeg'))]
         return imagenes

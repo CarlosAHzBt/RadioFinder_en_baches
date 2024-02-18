@@ -110,7 +110,9 @@ class Bache:
         
         #Convertir el radio maximo de a mm
         self.radio_maximo = self.radio_maximo * 1000
-        #return self.radio_maximo
+        
+        self.get_diametro_bache()
+        
 
 
 
