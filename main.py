@@ -21,12 +21,15 @@ def procesar_imagenes(carpeta_base):
         imagenes = administrador_archivos.generar_lista_de_imagenes(ruta_carpeta_bag)
         for ruta_imagen in imagenes:
             coordenadas_baches = segmentador.obtener_coordenadas_baches(ruta_imagen)
-            baches = [Bache(ruta_carpeta_bag, ruta_imagen, coord) for coord in coordenadas_baches]
-
-            for bache in baches:
+            for i, coord in enumerate(coordenadas_baches):
+                # Generar un ID único para cada bache
+                id_bache = f"{os.path.splitext(os.path.basename(ruta_imagen))[0]}_{i}"
+                bache = Bache(ruta_carpeta_bag, ruta_imagen, id_bache, coord)
+                # Procesar el bache (calcular contorno, radio máximo, etc.)
                 bache.calcular_contorno()
                 bache.calcular_radio_maximo()
-                print(f"El radio máximo del bache {bache.id_bache} es {bache.diametro_bache} unidades. Perteneciente al bag {bache.bag_de_origen}.")
+                print(f"El radio máximo del bache {bache.id_bache} es {bache.diametro_bache} mm procedente del bag {bache.bag_de_origen}.")
+                # Asumiendo que existe una lista para almacenar baches detectados
                 lista_baches.append(bache)
     return lista_baches
 
