@@ -5,14 +5,15 @@ import matplotlib.pyplot as plt
 from ConvertirPixelesAMetros import ConvertirPixelesAMetros
 
 class Bache:
-    def __init__(self,bag_de_origen,imagenRGB, coordenadas=None):
+    def __init__(self, bag_de_origen, imagenRGB, id_bache, coordenadas=None):
+        self.id_bache = id_bache
         self.imagen_original_shape = 480, 848  # Pasar la forma de la imagen original al inicializar
         self.bag_de_origen = bag_de_origen
         self.nube_puntos = None
         self.imagenRGB = imagenRGB
         self.coordenadas = np.array(coordenadas)[:, [1, 0]] if coordenadas is not None else np.empty((0, 2), dtype=int)
         # El id del bache es la ruta de la imagen pero solo el nombre del archivo "rgbimage.png" pero sin la extension
-        self.id_bache = os.path.splitext(os.path.basename(self.imagenRGB))[0]
+        #self.id_bache = os.path.splitext(os.path.basename(self.imagenRGB))[0]
         self.radio_maximo = 0
         self.diametro_bache = 0
         self.centro_circulo = (0, 0)
@@ -22,10 +23,9 @@ class Bache:
         self.escale_horizontal = 0
         self.escala_vertical = 0
 
-    def set_id_bache(self):
-        #El id del bache es la ruta de la imagen + el indice de la coordenada
-        pass
-
+    def get_id_bache(self):
+        return self.id_bache
+        
     def set_imagenRGB(self):
         #apartir de la ruta de la bolsa de origen, se obtiene la ruta de la imagen RGB
         self.imagenRGB = self.bag_de_origen + "/Imagen"       
@@ -35,6 +35,8 @@ class Bache:
         # y que `self.imagenRGB` es solo el nombre del archivo con su extensión
         
         nombre_archivo_sin_extension = self.id_bache
+        #quitarle el indice final al id del bache
+        nombre_archivo_sin_extension = nombre_archivo_sin_extension[:-2]
         ruta_nube_puntos = os.path.join(self.bag_de_origen, "PLY", nombre_archivo_sin_extension + ".ply")
         
         if os.path.exists(ruta_nube_puntos):
