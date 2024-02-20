@@ -24,7 +24,6 @@ class RANSAC:
         filtrados = puntos[(puntos[:, 1] > z_min) & (puntos[:, 1] < z_max)]
         pcd_filtrado = o3d.geometry.PointCloud()
         pcd_filtrado.points = o3d.utility.Vector3dVector(filtrados)
-        #Vizualizar np
         return pcd_filtrado
 
     def segmentar_terreno(self, pcd):
@@ -77,6 +76,6 @@ class RANSAC:
         # Nivelar puntos
         transformacion = self.nivelar_puntos(plano)
         pcd_nivelada = pcd.transform(transformacion) # La nube de puntos ya está nivelada después de esta llamada
-        o3d.visualization.draw_geometries([pcd_nivelada])
+        #o3d.visualization.draw_geometries([pcd_nivelada])
 
         return pcd_nivelada, plano

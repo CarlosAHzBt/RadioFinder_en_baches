@@ -17,7 +17,6 @@ class Bache:
         self.imagenRGB = imagenRGB
         self.coordenadas = np.array(coordenadas)[:, [1, 0]] if coordenadas is not None else np.empty((0, 2), dtype=int)
         # El id del bache es la ruta de la imagen pero solo el nombre del archivo "rgbimage.png" pero sin la extension
-        #self.id_bache = os.path.splitext(os.path.basename(self.imagenRGB))[0]
         self.radio_maximo = 0
         self.diametro_bache = 0
         self.centro_circulo = (0, 0)
@@ -134,8 +133,7 @@ class Bache:
             Procesa la nube de puntos utilizando RANSAC para segmentar y nivelar el terreno.
             """
             self.cargar_nube_puntos()
-            #Vizualizar np
-            #self.point_cloud_filter.visualize_point_cloud(self.nube_puntos)
+
             if self.nube_puntos is None:
                 print("Nube de puntos no cargada.")
                 return
@@ -144,18 +142,22 @@ class Bache:
             #pcd = self.nube_puntos
             # Procesa la nube de puntos completa con RANSAC
             pcd_nivelado, plano = self.ransac.procesar_nube_completa(self.nube_puntos)
-            #Vizualizar la np
-            #self.point_cloud_filter.visualize_point_cloud(pcd_nivelado)
+
             # Actualiza la nube de puntos de la instancia con la nube procesada y nivelada
             self.nube_puntos_procesada = pcd_nivelado
-            #Vizualizar la np
-            #self.point_cloud_filter.visualize_point_cloud(self.nube_puntos_procesada)
+  
             #Aplicar filtro de ROI
             self.convertir_coordenadas_a_metros_y_crear_nube()
             self.convertir_coordenadas_contorno_a_metros_y_centrar()
             self.nube_puntos_procesada= self.point_cloud_filter.filter_points_with_contour(self.nube_puntos_procesada, self.coordenadas_contorno_metros_centro)
-            self.point_cloud_filter.visualize_point_cloud(self.nube_puntos_procesada)
             print("El tamaño de la nube de puntos es: ", len(self.nube_puntos_procesada.points))
+
+            #filtro de outliers
+            #self.nube_puntos_procesada = self.filtro_outliers.eliminar_outliers(self.nube_puntos_procesada)
+            #Vizualizar np
+            #self.point_cloud_filter.visualize_point_cloud(self.nube_puntos_procesada)
+
+            return self.nube_puntos_procesada
 
     def cargar_nube_puntos(self):
         self.nube_puntos = o3d.io.read_point_cloud(self.ruta_nube_puntos)
@@ -217,20 +219,20 @@ class Bache:
         nube_puntos = o3d.geometry.PointCloud()
         nube_puntos.points = o3d.utility.Vector3dVector(puntos_metros)
         # Visualizar la nube de puntos
-        o3d.visualization.draw_geometries([nube_puntos])
+        #o3d.visualization.draw_geometries([nube_puntos])
         
     def convertir_coordenadas_contorno_a_metros_y_centrar(self):
         ancho_imagen, alto_imagen = self.imagen_original_shape[1], self.imagen_original_shape[0]
         centro_x, centro_y = ancho_imagen / 2, alto_imagen / 2
-    
+
         coordenadas_contorno_metros_centro = []
         for punto in self.contorno:
             x_centro = punto[0] - centro_x
             y_centro = punto[1] - centro_y
-    
+
             x_metros = x_centro * self.escale_horizontal
             y_metros = y_centro * self.escala_vertical
-    
+
             coordenadas_contorno_metros_centro.append([x_metros, y_metros])
-    
+
         self.coordenadas_contorno_metros_centro = coordenadas_contorno_metros_centro

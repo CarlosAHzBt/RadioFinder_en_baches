@@ -72,3 +72,4 @@ if __name__ == "__main__":
     # Paso 4: Procesar nubes de puntos
     procesar_nubes_de_puntos(baches_filtrados)
     
+    
