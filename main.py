@@ -73,6 +73,10 @@ if __name__ == "__main__":
     procesar_nubes_de_puntos(baches_filtrados)
 
     # Paso4.5 visualizar nubes de puntos
-    for bache in baches_filtrados:
-        bache.visualizar_nube_de_puntos(bache.nube_puntos_procesada)
+    #for bache in baches_filtrados:
+    #    bache.visualizar_nube_de_puntos(bache.nube_puntos_procesada)
     
+    #Paso 5 : Estimar la profundidad
+    for bache in baches_filtrados:
+        bache.estimar_profundidad()
+        print(f"La profundidad estimada del bache {bache.id_bache} es {bache.profundidad_del_bache} m.")
