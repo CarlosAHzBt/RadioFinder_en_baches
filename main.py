@@ -37,6 +37,13 @@ def filtrar_baches_por_radio(baches, diametro_minimo, diamtro_maximo):
     baches_filtrados = [bache for bache in baches if diametro_minimo <= bache.diametro_bache <= diamtro_maximo]
     return baches_filtrados
 
+#Con la lista de baches filtrados por radio se puede hacer el procesamiento de nubes de puntos
+#Se puede hacer el procesamiento de nubes de puntos en paralelo
+def procesar_nubes_de_puntos(baches_filtrados):
+    for bache in baches_filtrados:
+        bache.procesar_nube_puntos()
+        print(f"Se procesó la nube de puntos del bache {bache.id_bache} procedente del bag {bache.bag_de_origen}.")
+
 if __name__ == "__main__":
     ruta_carpeta_bags = "bag"
     carpeta_destino = "ArchivosDeLaExtraccion"
@@ -61,3 +68,7 @@ if __name__ == "__main__":
     baches_filtrados = filtrar_baches_por_radio(lista_baches, diametro_minimo, diametro_maximo)
 
     print(f"Se encontraron {len(baches_filtrados)} baches con un diámetro entre {diametro_minimo} y {diametro_maximo} unidades.")
+
+    # Paso 4: Procesar nubes de puntos
+    procesar_nubes_de_puntos(baches_filtrados)
+    

@@ -3,13 +3,17 @@ import cv2 as cv
 import os
 import matplotlib.pyplot as plt
 from ConvertirPixelesAMetros import ConvertirPixelesAMetros
+from FiltrosDeProcesamiento.FiltrosDeProcesamiento import PointCloudFilter
+from FiltrosDeProcesamiento.Ransac import RANSAC
+from FiltrosDeProcesamiento.FIltroOutliers import FiltroOutliers
+import open3d as o3d
 
 class Bache:
     def __init__(self, bag_de_origen, imagenRGB, id_bache, coordenadas=None):
         self.id_bache = id_bache
         self.imagen_original_shape = 480, 848  # Pasar la forma de la imagen original al inicializar
         self.bag_de_origen = bag_de_origen
-        self.nube_puntos = None
+        self.ruta_nube_puntos = None
         self.imagenRGB = imagenRGB
         self.coordenadas = np.array(coordenadas)[:, [1, 0]] if coordenadas is not None else np.empty((0, 2), dtype=int)
         # El id del bache es la ruta de la imagen pero solo el nombre del archivo "rgbimage.png" pero sin la extension
@@ -22,6 +26,14 @@ class Bache:
         self.altura_captura = 0
         self.escale_horizontal = 0
         self.escala_vertical = 0
+
+        #SeccionDeFiltros
+        self.nube_puntos = None
+        self.ransac = RANSAC()  # Instancia de RANSAC
+        self.filtro_outliers = FiltroOutliers()  # Instancia de FiltroOutliers
+        self.point_cloud_filter = PointCloudFilter()  # Instancia de PointCloudFilter
+
+
 
     def get_id_bache(self):
         return self.id_bache
@@ -40,7 +52,7 @@ class Bache:
         ruta_nube_puntos = os.path.join(self.bag_de_origen, "PLY", nombre_archivo_sin_extension + ".ply")
         
         if os.path.exists(ruta_nube_puntos):
-            self.nube_puntos = ruta_nube_puntos
+            self.ruta_nube_puntos = ruta_nube_puntos
         else:
             print(f"No se encontró la nube de puntos para {self.imagenRGB}")
 
@@ -117,9 +129,50 @@ class Bache:
         
 
 
+    def procesar_nube_puntos(self):
+            """
+            Procesa la nube de puntos utilizando RANSAC para segmentar y nivelar el terreno.
+            """
+            self.cargar_nube_puntos()
+            #Vizualizar np
+            #self.point_cloud_filter.visualize_point_cloud(self.nube_puntos)
+            if self.nube_puntos is None:
+                print("Nube de puntos no cargada.")
+                return
 
+            # Cargar la nube de puntos desde el archivo
+            #pcd = self.nube_puntos
+            # Procesa la nube de puntos completa con RANSAC
+            pcd_nivelado, plano = self.ransac.procesar_nube_completa(self.nube_puntos)
+            #Vizualizar la np
+            #self.point_cloud_filter.visualize_point_cloud(pcd_nivelado)
+            # Actualiza la nube de puntos de la instancia con la nube procesada y nivelada
+            self.nube_puntos_procesada = pcd_nivelado
+            #Vizualizar la np
+            #self.point_cloud_filter.visualize_point_cloud(self.nube_puntos_procesada)
+            #Aplicar filtro de ROI
+            self.convertir_coordenadas_a_metros_y_crear_nube()
+            self.convertir_coordenadas_contorno_a_metros_y_centrar()
+            self.nube_puntos_procesada= self.point_cloud_filter.filter_points_with_contour(self.nube_puntos_procesada, self.coordenadas_contorno_metros_centro)
+            self.point_cloud_filter.visualize_point_cloud(self.nube_puntos_procesada)
+            print("El tamaño de la nube de puntos es: ", len(self.nube_puntos_procesada.points))
 
-        
+    def cargar_nube_puntos(self):
+        self.nube_puntos = o3d.io.read_point_cloud(self.ruta_nube_puntos)
+
+    def visualizar_nube_puntos(self, nube_puntos=None):
+        if nube_puntos is None:
+            nube_puntos = self.nube_puntos
+        o3d.visualization.draw_geometries([nube_puntos])
+
+    def convertir_coordenadas_a_metros(self):
+        puntos_metros = []
+        for punto in self.contorno:
+            punto_metro_x = punto[0] * self.escale_horizontal
+            punto_metro_y = punto[1] * self.escala_vertical
+            puntos_metros.append([punto_metro_x, punto_metro_y])
+        self.coordenadas_metros = puntos_metros
+
     def dibujar_contorno(self, imagen):
         if self.contorno == []:
             raise ValueError("Contorno no ha sido calculado.")
@@ -138,7 +191,7 @@ class Bache:
     
     def set_altura_captura(self):
         #Aqui mismo hare todo el proceso chsm
-        self.altura_captura = self.ConvPx2M.estimar_altura_de_captura(self.nube_puntos)
+        self.altura_captura = self.ConvPx2M.estimar_altura_de_captura(self.ruta_nube_puntos)
 
     def set_escala_horizontal(self):
          self.escale_horizontal, self.escala_vertical = self.ConvPx2M.calcular_escala(self.altura_captura)
@@ -147,6 +200,37 @@ class Bache:
         self.diametro_bache = self.radio_maximo * -2
         return self.diametro_bache
 
+    
+
     def get_imagenRGB(self):
         # Devuelve la ruta de la imagen RGB
         return self.imagenRGB
+    
+    def convertir_coordenadas_a_metros_y_crear_nube(self):
+        puntos_metros = []
+        for punto in self.contorno:
+            punto_metro_x = punto[0] * self.escale_horizontal
+            punto_metro_y = punto[1] * self.escala_vertical
+            # Añade la altura en el eje z
+            puntos_metros.append([punto_metro_x, punto_metro_y, 1.0])
+        # Crear la nube de puntos
+        nube_puntos = o3d.geometry.PointCloud()
+        nube_puntos.points = o3d.utility.Vector3dVector(puntos_metros)
+        # Visualizar la nube de puntos
+        o3d.visualization.draw_geometries([nube_puntos])
+        
+    def convertir_coordenadas_contorno_a_metros_y_centrar(self):
+        ancho_imagen, alto_imagen = self.imagen_original_shape[1], self.imagen_original_shape[0]
+        centro_x, centro_y = ancho_imagen / 2, alto_imagen / 2
+    
+        coordenadas_contorno_metros_centro = []
+        for punto in self.contorno:
+            x_centro = punto[0] - centro_x
+            y_centro = punto[1] - centro_y
+    
+            x_metros = x_centro * self.escale_horizontal
+            y_metros = y_centro * self.escala_vertical
+    
+            coordenadas_contorno_metros_centro.append([x_metros, y_metros])
+    
+        self.coordenadas_contorno_metros_centro = coordenadas_contorno_metros_centro
