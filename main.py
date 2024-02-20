@@ -71,5 +71,8 @@ if __name__ == "__main__":
 
     # Paso 4: Procesar nubes de puntos
     procesar_nubes_de_puntos(baches_filtrados)
-    
+
+    # Paso4.5 visualizar nubes de puntos
+    for bache in baches_filtrados:
+        bache.visualizar_nube_de_puntos(bache.nube_puntos_procesada)
     
