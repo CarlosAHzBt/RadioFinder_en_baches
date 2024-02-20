@@ -19,6 +19,7 @@ class Bache:
         self.radio_maximo = 0
         self.diametro_bache = 0
         self.centro_circulo = (0, 0)
+        self.profundidad_del_bache=0
 
         self.ConvPx2M = ConvertirPixelesAMetros()
         self.altura_captura = 0
@@ -117,3 +118,11 @@ class Bache:
 
     def visualizar_nube_de_puntos(self, pcd):
         o3d.visualization.draw_geometries([pcd])
+
+    def estimar_profundidad(self):
+        #Se hace una resta entre la altura de captura y el punto con menor valor en el eje Z de la nube de puntos
+        puntos = np.asarray(self.nube_puntos_procesada.points)
+        #Se abre la nube de putnos procesada y se obtiene el punto con menor valor en el eje Z
+        minimo = np.min(puntos[:, 2])
+        #Se hace la resta
+        self.profundidad_del_bache = self.altura_captura - minimo
