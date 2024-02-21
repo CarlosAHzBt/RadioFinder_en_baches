@@ -5,11 +5,17 @@ from CargarModelo import CargarModelo
 from Bache import Bache
 import concurrent.futures
 import os
+import torch
 
 
 def cargar_modelo():
     modelo = CargarModelo()
     modelo_entrenado = modelo.cargar_modelo("RutaModelo/model_state_dict.pth")
+    #Si cuda esta activado mover el modelo a cuda
+    if torch.cuda.is_available():
+        modelo_entrenado.to('cuda')
+    else:
+        print("CUDA no está disponible, el modelo se ejecutará en CPU.")
     return modelo_entrenado
 
 
