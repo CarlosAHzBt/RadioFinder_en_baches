@@ -11,6 +11,8 @@ def cargar_modelo():
     modelo = CargarModelo()
     modelo_entrenado = modelo.cargar_modelo("RutaModelo/model_state_dict.pth")
     return modelo_entrenado
+
+
 def procesar_imagenes(carpeta_base):
 
     segmentador = ModeloSegmentacion(modelo_entrenado)
@@ -37,12 +39,30 @@ def filtrar_baches_por_radio(baches, diametro_minimo, diamtro_maximo):
     baches_filtrados = [bache for bache in baches if diametro_minimo <= bache.diametro_bache <= diamtro_maximo]
     return baches_filtrados
 
+
+def filtrar_y_procesar_baches(lista_baches, diametro_minimo, diametro_maximo):
+    baches_filtrados = filtrar_baches_por_radio(lista_baches, diametro_minimo, diametro_maximo)
+    print(f"Se encontraron {len(baches_filtrados)} baches con un diámetro entre {diametro_minimo} y {diametro_maximo} unidades.")
+    procesar_nubes_de_puntos(baches_filtrados)
+    for bache in baches_filtrados:
+        bache.estimar_profundidad()
+        print(f"La profundidad estimada del bache {bache.id_bache} es {bache.profundidad_del_bache} m.")
+
 #Con la lista de baches filtrados por radio se puede hacer el procesamiento de nubes de puntos
 #Se puede hacer el procesamiento de nubes de puntos en paralelo
 def procesar_nubes_de_puntos(baches_filtrados):
     for bache in baches_filtrados:
         bache.procesar_nube_puntos()
         print(f"Se procesó la nube de puntos del bache {bache.id_bache} procedente del bag {bache.bag_de_origen}.")
+
+def guardar_informacion_baches(lista_baches, nombre_archivo):
+    with open(nombre_archivo, 'w') as archivo:
+        for bache in lista_baches:
+            # Compilando la información del bache en una cadena de texto
+            informacion_bache = f"ID: {bache.id_bache}, Profundidad: {bache.profundidad_del_bache} m, Diámetro: {bache.diametro_bache} mm, Origen: {bache.bag_de_origen}\n"
+            # Escribir la información compilada en el archivo
+            archivo.write(informacion_bache)
+    print(f"La información de los baches ha sido guardada en {nombre_archivo}.")
 
 if __name__ == "__main__":
     ruta_carpeta_bags = "bag"
@@ -52,31 +72,16 @@ if __name__ == "__main__":
 
     procesador_bag = ProcesadorBags(ruta_carpeta_bags)
     lista_bag = procesador_bag.get_bag_files()
-    # Paso 1: Extraer datos de archivos .bag
+
     with concurrent.futures.ThreadPoolExecutor() as executor:
         for bag in lista_bag:
             executor.submit(procesador_bag.process_bag_file, bag)
 
-    # Paso 2: Procesar imágenes y detección de baches
-            #Se podria agregar paralelismo en este paso pero se tiene que cambiar la ruta que se manda ya que se esta mandando la ruta de todos los bags 
-            #Y la ruta de todos los bags se utiliza para darle identificador a los baches y facilitar el acceso a las nubes de puntos e imagenes
-            # por lo que se ocupa hacer varios cambios para poder hacer paralelismo en este paso
     lista_baches = procesar_imagenes(carpeta_destino)
-    # Paso 3: Filtrar baches por radio
+    
     diametro_minimo = 150
     diametro_maximo = 5000
-    baches_filtrados = filtrar_baches_por_radio(lista_baches, diametro_minimo, diametro_maximo)
+    filtrar_y_procesar_baches(lista_baches, diametro_minimo, diametro_maximo)
 
-    print(f"Se encontraron {len(baches_filtrados)} baches con un diámetro entre {diametro_minimo} y {diametro_maximo} unidades.")
-
-    # Paso 4: Procesar nubes de puntos
-    procesar_nubes_de_puntos(baches_filtrados)
-
-    # Paso4.5 visualizar nubes de puntos
-    #for bache in baches_filtrados:
-    #    bache.visualizar_nube_de_puntos(bache.nube_puntos_procesada)
-    
-    #Paso 5 : Estimar la profundidad
-    for bache in baches_filtrados:
-        bache.estimar_profundidad()
-        print(f"La profundidad estimada del bache {bache.id_bache} es {bache.profundidad_del_bache} m.")
+    # Guardar la información de los baches en un archivo txt
+    guardar_informacion_baches(lista_baches, "informacion_Resultados_baches.txt")
