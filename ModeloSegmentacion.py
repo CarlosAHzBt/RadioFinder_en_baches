@@ -22,6 +22,9 @@ class ModeloSegmentacion():
         return imagen_transformada
 
     def _aplicar_modelo(self, pixel_values):
+        #Si se tiene cuda activado mover pixel_values a cuda
+        if torch.cuda.is_available():
+            pixel_values = pixel_values.to('cuda')
         with torch.no_grad():
             predicciones = self.modelo(pixel_values=pixel_values)
             predicted_mask = predicciones[0].argmax(dim=1).squeeze().cpu().numpy()

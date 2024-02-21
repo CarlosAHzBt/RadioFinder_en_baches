@@ -1,0 +1,2 @@
+ID: frame_00000_0, Profundidad: 0.06296904819611515 m, Diámetro: 374.4714550172429 mm, Origen: ArchivosDeLaExtraccion\BacheRef2
+ID: frame_00001_0, Profundidad: 0.07464439580667537 m, Diámetro: 373.2093855005552 mm, Origen: ArchivosDeLaExtraccion\BacheRef2
