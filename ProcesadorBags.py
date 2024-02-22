@@ -7,7 +7,7 @@ import concurrent.futures
 class ProcesadorBags:
     def __init__(self, bag_files_path):
         self.bag_files_path = bag_files_path
-        #self.bag_files = self.get_bag_files()
+        self.bag_files = self.get_bag_files()
 
     def get_bag_files(self):
         """

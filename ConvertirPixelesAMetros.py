@@ -19,6 +19,13 @@ class ConvertirPixelesAMetros:
         altura_captura = AlturaCaptura(ply_path)
         return altura_captura.calcular_altura()
     
+    def estimar_altura_de_captura_de_nube_nivelada(self,pcd):
+        """
+        Estima la altura de captura de la nube de puntos PLY.
+        """
+        altura_captura = AlturaCaptura(pcd)
+        return altura_captura.calcular_altura()
+    
     def calcular_escala(self, altura_captura):
         """
         Calcula las escalas de conversión de píxeles a metros basadas en la altura de captura.

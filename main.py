@@ -47,17 +47,18 @@ def filtrar_baches_por_radio(baches, diametro_minimo, diamtro_maximo):
 
 
 def filtrar_y_procesar_baches(lista_baches, diametro_minimo, diametro_maximo):
-    baches_filtrados = filtrar_baches_por_radio(lista_baches, diametro_minimo, diametro_maximo)
-    print(f"Se encontraron {len(baches_filtrados)} baches con un diámetro entre {diametro_minimo} y {diametro_maximo} unidades.")
-    procesar_nubes_de_puntos(baches_filtrados)
-    for bache in baches_filtrados:
+    lista_baches = filtrar_baches_por_radio(lista_baches, diametro_minimo, diametro_maximo)
+    print(f"Se encontraron {len(lista_baches)} baches con un diámetro entre {diametro_minimo} y {diametro_maximo} unidades.")
+    #Eliminar de la lista de baches los que no cumplan con el radio
+    procesar_nubes_de_puntos(lista_baches)
+    for bache in lista_baches:
         bache.estimar_profundidad()
         print(f"La profundidad estimada del bache {bache.id_bache} es {bache.profundidad_del_bache} m.")
 
 #Con la lista de baches filtrados por radio se puede hacer el procesamiento de nubes de puntos
 #Se puede hacer el procesamiento de nubes de puntos en paralelo
-def procesar_nubes_de_puntos(baches_filtrados):
-    for bache in baches_filtrados:
+def procesar_nubes_de_puntos(lista_baches):
+    for bache in lista_baches:
         bache.procesar_nube_puntos()
         print(f"Se procesó la nube de puntos del bache {bache.id_bache} procedente del bag {bache.bag_de_origen}.")
 
@@ -65,7 +66,7 @@ def guardar_informacion_baches(lista_baches, nombre_archivo):
     with open(nombre_archivo, 'w') as archivo:
         for bache in lista_baches:
             # Compilando la información del bache en una cadena de texto
-            informacion_bache = f"ID: {bache.id_bache}, Profundidad: {bache.profundidad_del_bache} m, Diámetro: {bache.diametro_bache} mm, Origen: {bache.bag_de_origen}\n"
+            informacion_bache = f"ID: {bache.id_bache}, Profundidad: {bache.profundidad_del_bache} m, Diámetro: {bache.diametro_bache} mm, Origen: {bache.bag_de_origen}\n, Altura de captura: {bache.altura_captura} m\n"
             # Escribir la información compilada en el archivo
             archivo.write(informacion_bache)
     print(f"La información de los baches ha sido guardada en {nombre_archivo}.")
@@ -73,20 +74,24 @@ def guardar_informacion_baches(lista_baches, nombre_archivo):
 if __name__ == "__main__":
     ruta_carpeta_bags = "bag"
     carpeta_destino = "ArchivosDeLaExtraccion"
+    procesador_bag = ProcesadorBags(ruta_carpeta_bags)
+
+    procesador_bag.process_bag_files()
+
+    
     lista_baches = []
     modelo_entrenado = cargar_modelo()
 
-    procesador_bag = ProcesadorBags(ruta_carpeta_bags)
-    lista_bag = procesador_bag.get_bag_files()
+    #lista_bag = procesador_bag.get_bag_files()
 
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        for bag in lista_bag:
-            executor.submit(procesador_bag.process_bag_file, bag)
+    #with concurrent.futures.ThreadPoolExecutor() as executor:
+    #    for bag in lista_bag:
+    #        executor.submit(procesador_bag.process_bag_file, bag)
 
     lista_baches = procesar_imagenes(carpeta_destino)
     
     diametro_minimo = 150
-    diametro_maximo = 5000
+    diametro_maximo = 1000
     filtrar_y_procesar_baches(lista_baches, diametro_minimo, diametro_maximo)
 
     # Guardar la información de los baches en un archivo txt

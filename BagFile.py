@@ -42,7 +42,7 @@ class BagFile:
 
     def extract_and_save_frames(self, pipeline):
         """
-        Extrae, procesa y guarda los frames del archivo .bag.
+        Extrae, procesa y guarda los frames del archivo .bag. primero los frames de color y luego los ply
         """
         frame_number = 0
         try:

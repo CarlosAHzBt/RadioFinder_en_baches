@@ -11,9 +11,13 @@ class AlturaCaptura:
         # Cargar archivo PLY y retornar nube de puntos
         nube_puntos = o3d.io.read_point_cloud(self.archivo_ply)
         return nube_puntos
-
+    
     def calcular_altura(self):
-        nube_puntos = self.cargar_nube_puntos()
+        #Si self.archivo_ply es un string, cargar la nube de puntos
+        if isinstance(self.archivo_ply, str):
+            nube_puntos = self.cargar_nube_puntos()
+        else:
+            nube_puntos= self.archivo_ply
 
         # Obtener las coordenadas de los puntos
         puntos = np.asarray(nube_puntos.points)

@@ -72,7 +72,7 @@ class Bache:
         if self.radio_maximo == 0:
             raise ValueError("No se encontraron puntos dentro del contorno para calcular el radio máximo.")
         self.set_ruta_nube_puntos()
-        self.set_altura_captura()
+        self.set_altura_captura(self.ruta_nube_puntos)
         self.ConvPx2M.calcular_escala(self.altura_captura)
         self.set_escala_horizontal()
         self.radio_maximo = self.ConvPx2M.convertir_radio_pixeles_a_metros(self.radio_maximo, self.escale_horizontal)
@@ -86,6 +86,8 @@ class Bache:
             return
         pcd_nivelado, plano = self.ransac.procesar_nube_completa(self.nube_puntos)
         self.nube_puntos_procesada = pcd_nivelado
+        #Estimar altura de captura de la nube de puntos nivelada
+        self.set_altura_captura(self.ruta_nube_puntos)
         self.convertir_coordenadas_contorno_a_metros_y_centrar()
         self.nube_puntos_procesada = self.point_cloud_filter.filter_points_with_contour(self.nube_puntos_procesada, self.coordenadas_contorno_metros_centro)
         print("El tamaño de la nube de puntos es: ", len(self.nube_puntos_procesada.points))
@@ -94,8 +96,8 @@ class Bache:
     def _cargar_nube_puntos(self):
         self.nube_puntos = o3d.io.read_point_cloud(self.ruta_nube_puntos)
 
-    def set_altura_captura(self):
-        self.altura_captura = self.ConvPx2M.estimar_altura_de_captura(self.ruta_nube_puntos)
+    def set_altura_captura(self,nube_puntos):
+        self.altura_captura = self.ConvPx2M.estimar_altura_de_captura(nube_puntos)
 
     def set_escala_horizontal(self):
          self.escale_horizontal, self.escala_vertical = self.ConvPx2M.calcular_escala(self.altura_captura)
@@ -122,7 +124,14 @@ class Bache:
     def estimar_profundidad(self):
         #Se hace una resta entre la altura de captura y el punto con menor valor en el eje Z de la nube de puntos
         puntos = np.asarray(self.nube_puntos_procesada.points)
+        #Ver nube de puntos procesada
+        self.visualizar_nube_de_puntos(self.nube_puntos_procesada)
         #Se abre la nube de putnos procesada y se obtiene el punto con menor valor en el eje Z
+        if puntos.size > 0:
+            minimo = np.min(puntos[:, 2])
+        else:
+            print("El array puntos está vacío.")
+        minimo = None
         minimo = np.min(puntos[:, 2])
         #Se hace la resta
         self.profundidad_del_bache = self.altura_captura - minimo
