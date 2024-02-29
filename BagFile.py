@@ -51,7 +51,7 @@ class BagFile:
                 color_frame, depth_frame = self.get_frames(frames)
                 if color_frame and depth_frame:
                     self.save_color_image(color_frame, frame_number)
-                    self.save_depth_frame_as_ply(color_frame, depth_frame, frame_number)
+                    self.save_depth_frame_as_textual_ply(color_frame, depth_frame, frame_number)
                     frame_number += 1
         except RuntimeError as e:
             print(f"Error al procesar frames: {e}")
@@ -82,6 +82,34 @@ class BagFile:
         points = pc.calculate(depth_frame)
         ply_filename = os.path.join(self.ply_folder, f"frame_{frame_number:05d}.ply")
         points.export_to_ply(ply_filename, color_frame)
+
+    def save_depth_frame_as_textual_ply(self, color_frame, depth_frame, frame_number):
+        """
+        Guarda un frame de profundidad como un archivo PLY en formato textual.
+        """
+
+        pc = rs.pointcloud()
+        pc.map_to(color_frame)
+        points = pc.calculate(depth_frame)
+        vtx = np.asanyarray(points.get_vertices())
+
+        # Definir el nombre del archivo PLY
+        ply_filename = os.path.join(self.ply_folder, f"frame_{frame_number:05d}.ply")
+
+        # Escribir el archivo PLY
+        with open(ply_filename, 'w') as ply_file:
+            # Escribir la cabecera PLY
+            ply_file.write("ply\n")
+            ply_file.write("format ascii 1.0\n")
+            ply_file.write(f"element vertex {len(vtx)}\n")
+            ply_file.write("property float x\n")
+            ply_file.write("property float y\n")
+            ply_file.write("property float z\n")
+            ply_file.write("end_header\n")
+
+            # Escribir los datos de los puntos
+            for v in vtx:
+                ply_file.write(f"{v[0]} {v[1]} {v[2]}\n")
 
 # Uso de la clase
 #bag_files_folder = 'BagPrueba'

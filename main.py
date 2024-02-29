@@ -10,7 +10,7 @@ import torch
 
 def cargar_modelo():
     modelo = CargarModelo()
-    modelo_entrenado = modelo.cargar_modelo("RutaModelo/model_state_dict.pth")
+    modelo_entrenado = modelo.cargar_modelo("RutaModelo/model_state_dictV5.pth")
     #Si cuda esta activado mover el modelo a cuda
     if torch.cuda.is_available():
         modelo_entrenado.to('cuda')
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     lista_baches = procesar_imagenes(carpeta_destino)
     
     diametro_minimo = 150
-    diametro_maximo = 5000
+    diametro_maximo = 9000
     filtrar_y_procesar_baches(lista_baches, diametro_minimo, diametro_maximo)
 
     # Guardar la información de los baches en un archivo txt

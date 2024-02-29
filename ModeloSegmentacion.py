@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 class ModeloSegmentacion():
     def __init__(self, modelo_entrenado):
-        self.min_area = 8600  # Configura esto según tus necesidades
+        self.min_area = 8600  # Configura esto según tus necesidades del tamaño mínimo de bache para pixeles
         self.modelo = modelo_entrenado
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -56,5 +56,5 @@ class ModeloSegmentacion():
         mask_resized = self._redimensionar_mascara(predicted_mask)
         labeled_mask = self._etiquetar_regiones(mask_resized)
         coordenadas_baches = self._filtrar_regiones(labeled_mask)
-        #self._dibujar_regiones_filtradas(labeled_mask, coordenadas_baches)
+        self._dibujar_regiones_filtradas(labeled_mask, coordenadas_baches)
         return coordenadas_baches

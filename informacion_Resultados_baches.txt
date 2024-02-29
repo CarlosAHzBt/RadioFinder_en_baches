@@ -1,2 +1,4 @@
-ID: frame_00000_0, Profundidad: 0.06296904819611515 m, Diámetro: 374.4714550172429 mm, Origen: ArchivosDeLaExtraccion\BacheRef2
-ID: frame_00001_0, Profundidad: 0.07464439580667537 m, Diámetro: 373.2093855005552 mm, Origen: ArchivosDeLaExtraccion\BacheRef2
+ID: frame_00000_0, Profundidad: 0 m, Diámetro: -765.8514560126072 mm, Origen: ArchivosDeLaExtraccion\20240206_073822
+ID: frame_00001_0, Profundidad: 0 m, Diámetro: -728.2259251094124 mm, Origen: ArchivosDeLaExtraccion\20240206_073822
+ID: frame_00002_0, Profundidad: 0.097006496446016 m, Diámetro: 739.671541890559 mm, Origen: ArchivosDeLaExtraccion\20240206_073822
+ID: frame_00003_0, Profundidad: 0.09174253009671252 m, Diámetro: 742.3611999871949 mm, Origen: ArchivosDeLaExtraccion\20240206_073822
