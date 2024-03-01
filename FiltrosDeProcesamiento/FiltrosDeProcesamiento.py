@@ -38,7 +38,7 @@ class PointCloudFilter:
         filtered_pcd.points = o3d.utility.Vector3dVector(filtered_points)
 
         # Opcional: Visualizar la nube de puntos filtrada
-        self.visualize_point_cloud(filtered_pcd)
+        #self.visualize_point_cloud(filtered_pcd)
 
         return filtered_pcd
 
@@ -55,3 +55,21 @@ class PointCloudFilter:
         Guarda la nube de puntos en el archivo especificado.
         """
         o3d.io.write_point_cloud(output_path, pcd)
+
+
+    #Funcion para visualizar imagen rgb en una malla de puntos 3D para comparar con la nube de puntos y el contorno de las coordenadas convertidas a metros
+    def visuzlizar_imgen_rgb(self,imagen_path, coordenadass_a_metros):
+    #    #Crear una malla de puntos 3D a partir de la imagen
+    #    imagen = o3d.io.read_image(imagen_path)
+#
+    #    imagen_malla = o3d.geometry.Image(imagen)
+    #    #imagen_malla = o3d.geometry.create_point_cloud_from_rgbd_image(imagen_malla)
+    #    #Crear una malla de puntos 3D a partir de las coordenadas convertidas a metros
+    #    coordenadas_malla = o3d.geometry.PointCloud()
+    #    coordenadass_a_metros = np.array(coordenadass_a_metros)
+    #    coordenadass_a_metros = np.concatenate([coordenadass_a_metros, np.zeros((coordenadass_a_metros.shape[0], 1))], axis=1)
+#
+    #    coordenadas_malla.points = o3d.utility.Vector3dVector(coordenadass_a_metros)
+    #    #Visualizar ambas mallas de puntos
+    #    o3d.visualization.draw_geometries([imagen_malla, coordenadas_malla])
+        pass

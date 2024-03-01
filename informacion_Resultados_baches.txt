@@ -1,10 +1,134 @@
-ID: frame_00000_0, Profundidad: 0.08156697669611734 m, Diámetro: 781.8275287851517 mm, Origen: ArchivosDeLaExtraccion\20240206_073822
-, Altura de captura: -1.5660001039505005 m
-ID: frame_00001_0, Profundidad: 0.0919444554451676 m, Diámetro: 752.6825189723628 mm, Origen: ArchivosDeLaExtraccion\20240206_073822
-, Altura de captura: -1.5510001182556152 m
-ID: frame_00002_0, Profundidad: 0.09696919642714463 m, Diámetro: 739.671541890559 mm, Origen: ArchivosDeLaExtraccion\20240206_073822
-, Altura de captura: -1.5510001182556152 m
-ID: frame_00000_0, Profundidad: 0.06623331124191334 m, Diámetro: 338.55440235259283 mm, Origen: ArchivosDeLaExtraccion\BacheRef2
-, Altura de captura: -1.0540000200271606 m
-ID: frame_00001_0, Profundidad: 0.0741931527829891 m, Diámetro: 344.8383908569468 mm, Origen: ArchivosDeLaExtraccion\BacheRef2
-, Altura de captura: -1.0450000762939453 m
+ID: frame_00000_0, Profundidad: 0.03448860780581775 m, Diámetro: 207.22830779903796 mm, Origen: ArchivosDeLaExtraccion\1
+, Altura de captura: -0.9490000605583191 m
+ID: frame_00001_0, Profundidad: 0.03574599250647803 m, Diámetro: 203.35540186029448 mm, Origen: ArchivosDeLaExtraccion\1
+, Altura de captura: -0.9490000605583191 m
+ID: frame_00002_0, Profundidad: 0.03436261181213229 m, Diámetro: 195.37941368214805 mm, Origen: ArchivosDeLaExtraccion\1
+, Altura de captura: -0.9490000605583191 m
+ID: frame_00003_0, Profundidad: 0.03436261181213229 m, Diámetro: 195.37941368214805 mm, Origen: ArchivosDeLaExtraccion\1
+, Altura de captura: -0.9490000605583191 m
+ID: frame_00000_0, Profundidad: -0.0472898844303522 m, Diámetro: 427.73679756761817 mm, Origen: ArchivosDeLaExtraccion\20240206_073721
+, Altura de captura: -1.537000060081482 m
+ID: frame_00000_1, Profundidad: -0.07440000883598663 m, Diámetro: 217.08031313140776 mm, Origen: ArchivosDeLaExtraccion\20240206_073721
+, Altura de captura: -1.537000060081482 m
+ID: frame_00001_0, Profundidad: -0.05311722124175988 m, Diámetro: 430.97508371021326 mm, Origen: ArchivosDeLaExtraccion\20240206_073721
+, Altura de captura: -1.537000060081482 m
+ID: frame_00001_1, Profundidad: -0.06950770258113925 m, Diámetro: 220.59739062013992 mm, Origen: ArchivosDeLaExtraccion\20240206_073721
+, Altura de captura: -1.537000060081482 m
+ID: frame_00002_0, Profundidad: -0.04212169222729423 m, Diámetro: 397.4346406920721 mm, Origen: ArchivosDeLaExtraccion\20240206_073721
+, Altura de captura: -1.5200001001358032 m
+ID: frame_00002_1, Profundidad: -0.06417058699131206 m, Diámetro: 192.1793297638652 mm, Origen: ArchivosDeLaExtraccion\20240206_073721
+, Altura de captura: -1.5200001001358032 m
+ID: frame_00003_0, Profundidad: -0.04216020147853161 m, Diámetro: 397.4346406920721 mm, Origen: ArchivosDeLaExtraccion\20240206_073721
+, Altura de captura: -1.5200001001358032 m
+ID: frame_00003_1, Profundidad: -0.06361300347170151 m, Diámetro: 192.1793297638652 mm, Origen: ArchivosDeLaExtraccion\20240206_073721
+, Altura de captura: -1.5200001001358032 m
+ID: frame_00000_0, Profundidad: 0 m, Diámetro: 72.47187231426427 mm, Origen: ArchivosDeLaExtraccion\20240206_073736
+, Altura de captura: -1.440000057220459 m
+ID: frame_00001_0, Profundidad: 0.009818929079215888 m, Diámetro: 189.1679409119715 mm, Origen: ArchivosDeLaExtraccion\20240206_073736
+, Altura de captura: -1.440000057220459 m
+ID: frame_00000_0, Profundidad: 0.055697059923716985 m, Diámetro: 494.8502525863777 mm, Origen: ArchivosDeLaExtraccion\20240206_073749
+, Altura de captura: -1.4280000925064087 m
+ID: frame_00001_0, Profundidad: 0.0523158879317962 m, Diámetro: 505.3476972273504 mm, Origen: ArchivosDeLaExtraccion\20240206_073749
+, Altura de captura: -1.4310001134872437 m
+ID: frame_00000_0, Profundidad: -0.003431323700464839 m, Diámetro: 272.6169870852703 mm, Origen: ArchivosDeLaExtraccion\20240206_073757
+, Altura de captura: -1.4490001201629639 m
+ID: frame_00001_0, Profundidad: 0.01924865473308479 m, Diámetro: 490.0911436935684 mm, Origen: ArchivosDeLaExtraccion\20240206_073757
+, Altura de captura: -1.446000099182129 m
+ID: frame_00002_0, Profundidad: 0.011081851077825666 m, Diámetro: 505.9581380999053 mm, Origen: ArchivosDeLaExtraccion\20240206_073757
+, Altura de captura: -1.4490001201629639 m
+ID: frame_00000_0, Profundidad: 0.09214608663938861 m, Diámetro: 762.7965394951162 mm, Origen: ArchivosDeLaExtraccion\20240206_073819
+, Altura de captura: -1.5100001096725464 m
+ID: frame_00001_0, Profundidad: 0.09466647603201461 m, Diámetro: 781.4564109160439 mm, Origen: ArchivosDeLaExtraccion\20240206_073819
+, Altura de captura: -1.5140000581741333 m
+ID: frame_00002_0, Profundidad: 0.08539618186212117 m, Diámetro: 788.2093708185997 mm, Origen: ArchivosDeLaExtraccion\20240206_073819
+, Altura de captura: -1.5140000581741333 m
+ID: frame_00000_0, Profundidad: 0.04750118872543885 m, Diámetro: 797.8035420423081 mm, Origen: ArchivosDeLaExtraccion\20240206_073822
+, Altura de captura: -1.5980000495910645 m
+ID: frame_00001_0, Profundidad: 0.0706442365492086 m, Diámetro: 751.5940238391211 mm, Origen: ArchivosDeLaExtraccion\20240206_073822
+, Altura de captura: -1.5760000944137573 m
+ID: frame_00002_0, Profundidad: 0.07017317482844643 m, Diámetro: 751.5940238391211 mm, Origen: ArchivosDeLaExtraccion\20240206_073822
+, Altura de captura: -1.5760000944137573 m
+ID: frame_00000_0, Profundidad: 0.0012149835736912085 m, Diámetro: 150.69474098292648 mm, Origen: ArchivosDeLaExtraccion\20240206_073847
+, Altura de captura: -1.2600001096725464 m
+ID: frame_00002_0, Profundidad: 0 m, Diámetro: 148.51680291172855 mm, Origen: ArchivosDeLaExtraccion\20240206_073847
+, Altura de captura: -1.2760000228881836 m
+ID: frame_00003_0, Profundidad: 0.017068098584336555 m, Diámetro: 164.40406413912692 mm, Origen: ArchivosDeLaExtraccion\20240206_073847
+, Altura de captura: -1.2690000534057617 m
+ID: frame_00004_0, Profundidad: 0 m, Diámetro: 135.98166983129317 mm, Origen: ArchivosDeLaExtraccion\20240206_073847
+, Altura de captura: -1.2670000791549683 m
+ID: frame_00005_0, Profundidad: 0.03439002747114506 m, Diámetro: 159.32440311836152 mm, Origen: ArchivosDeLaExtraccion\20240206_073847
+, Altura de captura: -1.284000039100647 m
+ID: frame_00006_0, Profundidad: 0 m, Diámetro: 141.07514039385134 mm, Origen: ArchivosDeLaExtraccion\20240206_073847
+, Altura de captura: -1.281000018119812 m
+ID: frame_00007_0, Profundidad: 0 m, Diámetro: 136.29559983319922 mm, Origen: ArchivosDeLaExtraccion\20240206_073847
+, Altura de captura: -1.2740000486373901 m
+ID: frame_00000_0, Profundidad: 0 m, Diámetro: 146.14032197988993 mm, Origen: ArchivosDeLaExtraccion\20240206_073859
+, Altura de captura: -1.2740000486373901 m
+ID: frame_00001_0, Profundidad: 0 m, Diámetro: 134.99632405992827 mm, Origen: ArchivosDeLaExtraccion\20240206_073859
+, Altura de captura: -1.2790000438690186 m
+ID: frame_00002_0, Profundidad: 0 m, Diámetro: 134.99632405992827 mm, Origen: ArchivosDeLaExtraccion\20240206_073859
+, Altura de captura: -1.2790000438690186 m
+ID: frame_00000_0, Profundidad: 0.014212564300561947 m, Diámetro: 206.3666824014509 mm, Origen: ArchivosDeLaExtraccion\20240206_073932
+, Altura de captura: -1.1759999990463257 m
+ID: frame_00001_0, Profundidad: 0 m, Diámetro: 65.47324155338296 mm, Origen: ArchivosDeLaExtraccion\20240206_073932
+, Altura de captura: -1.1880000829696655 m
+ID: frame_00001_1, Profundidad: 0.020437769985440113 m, Diámetro: 185.26637291724677 mm, Origen: ArchivosDeLaExtraccion\20240206_073932
+, Altura de captura: -1.1880000829696655 m
+ID: frame_00002_0, Profundidad: 0.02982050811669712 m, Diámetro: 221.17924564556552 mm, Origen: ArchivosDeLaExtraccion\20240206_073932
+, Altura de captura: -1.194000005722046 m
+ID: frame_00000_0, Profundidad: 0 m, Diámetro: 101.25931068352573 mm, Origen: ArchivosDeLaExtraccion\20240206_074110
+, Altura de captura: -1.00600004196167 m
+ID: frame_00001_0, Profundidad: 0 m, Diámetro: 80.70936073196546 mm, Origen: ArchivosDeLaExtraccion\20240206_074110
+, Altura de captura: -1.0080000162124634 m
+ID: frame_00000_0, Profundidad: -0.07132755296702631 m, Diámetro: 167.70628245818338 mm, Origen: ArchivosDeLaExtraccion\20240206_074133
+, Altura de captura: -1.3260000944137573 m
+ID: frame_00001_0, Profundidad: -0.07796907065359338 m, Diámetro: 169.51728342306532 mm, Origen: ArchivosDeLaExtraccion\20240206_074133
+, Altura de captura: -1.3390001058578491 m
+ID: frame_00000_0, Profundidad: 0.04290680474790798 m, Diámetro: 217.33971488111013 mm, Origen: ArchivosDeLaExtraccion\3
+, Altura de captura: -0.9420000314712524 m
+ID: frame_00001_0, Profundidad: 0.04341623587800614 m, Diámetro: 213.77032039746155 mm, Origen: ArchivosDeLaExtraccion\3
+, Altura de captura: -0.9420000314712524 m
+ID: frame_00002_0, Profundidad: 0.04341623587800614 m, Diámetro: 213.77032039746155 mm, Origen: ArchivosDeLaExtraccion\3
+, Altura de captura: -0.9420000314712524 m
+ID: frame_00003_0, Profundidad: 0.04346061884492258 m, Diámetro: 217.18947756456717 mm, Origen: ArchivosDeLaExtraccion\3
+, Altura de captura: -0.9420000314712524 m
+ID: frame_00004_0, Profundidad: 0.04341623587800614 m, Diámetro: 213.77032039746155 mm, Origen: ArchivosDeLaExtraccion\3
+, Altura de captura: -0.9420000314712524 m
+ID: frame_00000_0, Profundidad: 0.013455566582553313 m, Diámetro: 163.7260909663819 mm, Origen: ArchivosDeLaExtraccion\4
+, Altura de captura: -0.968000054359436 m
+ID: frame_00001_0, Profundidad: 0.013459653014813888 m, Diámetro: 155.01322285572377 mm, Origen: ArchivosDeLaExtraccion\4
+, Altura de captura: -0.968000054359436 m
+ID: frame_00002_0, Profundidad: 0.01324441318174363 m, Diámetro: 156.1841059314938 mm, Origen: ArchivosDeLaExtraccion\4
+, Altura de captura: -0.968000054359436 m
+ID: frame_00003_0, Profundidad: 0.01324441318174363 m, Diámetro: 156.1841059314938 mm, Origen: ArchivosDeLaExtraccion\4
+, Altura de captura: -0.968000054359436 m
+ID: frame_00000_0, Profundidad: 0.0547601659894108 m, Diámetro: 267.0281177762345 mm, Origen: ArchivosDeLaExtraccion\5
+, Altura de captura: -0.9360000491142273 m
+ID: frame_00001_0, Profundidad: 0.054221810527953496 m, Diámetro: 268.26659546457853 mm, Origen: ArchivosDeLaExtraccion\5
+, Altura de captura: -0.9360000491142273 m
+ID: frame_00002_0, Profundidad: 0.05476328482249804 m, Diámetro: 208.40458071643673 mm, Origen: ArchivosDeLaExtraccion\5
+, Altura de captura: -0.9360000491142273 m
+ID: frame_00003_0, Profundidad: 0.05385056933117538 m, Diámetro: 268.26659546457853 mm, Origen: ArchivosDeLaExtraccion\5
+, Altura de captura: -0.9360000491142273 m
+ID: frame_00004_0, Profundidad: 0.0512164649341279 m, Diámetro: 264.27258629158763 mm, Origen: ArchivosDeLaExtraccion\5
+, Altura de captura: -0.9360000491142273 m
+ID: frame_00005_0, Profundidad: 0.05385268285743616 m, Diámetro: 268.26659546457853 mm, Origen: ArchivosDeLaExtraccion\5
+, Altura de captura: -0.9360000491142273 m
+ID: frame_00006_0, Profundidad: 0.0548008101556714 m, Diámetro: 270.0625282055099 mm, Origen: ArchivosDeLaExtraccion\5
+, Altura de captura: -0.9360000491142273 m
+ID: frame_00007_0, Profundidad: 0.053781583974000235 m, Diámetro: 270.0625282055099 mm, Origen: ArchivosDeLaExtraccion\5
+, Altura de captura: -0.9360000491142273 m
+ID: frame_00008_0, Profundidad: 0.05383538893614548 m, Diámetro: 267.25215637972207 mm, Origen: ArchivosDeLaExtraccion\5
+, Altura de captura: -0.9360000491142273 m
+ID: frame_00009_0, Profundidad: 0.05385268285743616 m, Diámetro: 268.26659546457853 mm, Origen: ArchivosDeLaExtraccion\5
+, Altura de captura: -0.9360000491142273 m
+ID: frame_00000_0, Profundidad: 0.013645695724174178 m, Diámetro: 164.84899167686768 mm, Origen: ArchivosDeLaExtraccion\7
+, Altura de captura: -0.9520000219345093 m
+ID: frame_00001_0, Profundidad: 0.015135262481465017 m, Diámetro: 150.50167533301538 mm, Origen: ArchivosDeLaExtraccion\7
+, Altura de captura: -0.9520000219345093 m
+ID: frame_00002_0, Profundidad: 0.015135262481465017 m, Diámetro: 150.50167533301538 mm, Origen: ArchivosDeLaExtraccion\7
+, Altura de captura: -0.9520000219345093 m
+ID: frame_00000_0, Profundidad: 0.06046434957699365 m, Diámetro: 340.1604463423891 mm, Origen: ArchivosDeLaExtraccion\BacheRef2
+, Altura de captura: -1.059000015258789 m
+ID: frame_00001_0, Profundidad: 0.06180621202263992 m, Diámetro: 348.46824132606486 mm, Origen: ArchivosDeLaExtraccion\BacheRef2
+, Altura de captura: -1.055999994277954 m

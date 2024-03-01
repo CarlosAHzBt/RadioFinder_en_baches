@@ -89,7 +89,8 @@ class Bache:
         #Estimar altura de captura de la nube de puntos nivelada
         self.set_altura_captura(self.ruta_nube_puntos)
         self.convertir_coordenadas_contorno_a_metros_y_centrar()
-        self.nube_puntos_procesada = self.point_cloud_filter.filter_points_with_bounding_box(self.nube_puntos_procesada, self.coordenadas_contorno_metros_centro)
+        self.point_cloud_filter.visuzlizar_imgen_rgb(self.imagenRGB, self.coordenadas_contorno_metros_centro)
+        self.nube_puntos_procesada = self.point_cloud_filter.filter_points_with_bounding_box(self.nube_puntos, self.coordenadas_contorno_metros_centro)
         print("El tamaño de la nube de puntos es: ", len(self.nube_puntos_procesada.points))
         return self.nube_puntos_procesada
 
@@ -114,15 +115,32 @@ class Bache:
             x_centro = punto[0] - centro_x
             y_centro = punto[1] - centro_y
             x_metros = x_centro * self.escale_horizontal
-            y_metros = y_centro * self.escala_vertical
+            y_metros = y_centro * self.escala_vertical 
             coordenadas_contorno_metros_centro.append([x_metros, y_metros])
         self.coordenadas_contorno_metros_centro = coordenadas_contorno_metros_centro
+        #Dibujar ambas coordenadas en una imagen tanto del contorno como de las coordenadas en metros
+        #imagen_contorno = np.zeros(self.imagen_original_shape[:2], dtype=np.uint8)
+        #cv.drawContours(imagen_contorno, [self.contorno], -1, color=255, thickness=1)
+        #imagen_contorno_metros = np.zeros(self.imagen_original_shape[:2], dtype=np.uint8)
+        #for punto in self.coordenadas_contorno_metros_centro:
+        #    x = int(punto[0] / self.escale_horizontal + centro_x)
+        #    y = int(punto[1] / self.escala_vertical + centro_y)
+        #    imagen_contorno_metros[y, x] = 255
+        #plt.figure()
+        #plt.subplot(1, 2, 1)
+        #plt.imshow(imagen_contorno, cmap="gray")
+        #plt.title("Contorno")
+        #plt.subplot(1, 2, 2)
+        #plt.imshow(imagen_contorno_metros, cmap="gray")
+        #plt.title("Contorno en metros")
+        #plt.show()
+        
 
     def visualizar_nube_de_puntos(self, pcd):
         o3d.visualization.draw_geometries([pcd])
 
     def estimar_profundidad(self):
-        self.visualizar_nube_de_puntos(self.nube_puntos_procesada)
+        #self.visualizar_nube_de_puntos(self.nube_puntos_procesada)
         #Se hace una resta entre la altura de captura y el punto con menor valor en el eje Z de la nube de puntos
         puntos = np.asarray(self.nube_puntos_procesada.points)
         #Ver nube de puntos procesada
@@ -136,3 +154,5 @@ class Bache:
         minimo = np.min(puntos[:, 2])
         #Se hace la resta
         self.profundidad_del_bache = self.altura_captura - minimo
+
+    
