@@ -89,7 +89,7 @@ class Bache:
         #Estimar altura de captura de la nube de puntos nivelada
         self.set_altura_captura(self.ruta_nube_puntos)
         self.convertir_coordenadas_contorno_a_metros_y_centrar()
-        self.nube_puntos_procesada = self.point_cloud_filter.filter_points_with_contour(self.nube_puntos_procesada, self.coordenadas_contorno_metros_centro)
+        self.nube_puntos_procesada = self.point_cloud_filter.filter_points_with_bounding_box(self.nube_puntos_procesada, self.coordenadas_contorno_metros_centro)
         print("El tamaño de la nube de puntos es: ", len(self.nube_puntos_procesada.points))
         return self.nube_puntos_procesada
 
