@@ -122,6 +122,7 @@ class Bache:
         o3d.visualization.draw_geometries([pcd])
 
     def estimar_profundidad(self):
+        self.visualizar_nube_de_puntos(self.nube_puntos_procesada)
         #Se hace una resta entre la altura de captura y el punto con menor valor en el eje Z de la nube de puntos
         puntos = np.asarray(self.nube_puntos_procesada.points)
         #Ver nube de puntos procesada

@@ -8,30 +8,25 @@ class PointCloudFilter:
     
     def filter_points_with_contour(self, pcd, contour_coords_meters):
         """
-        Filtra los puntos dentro de una nube de puntos basándose en un contorno dado en metros.
-
-        :param pcd: Objeto PointCloud de Open3D que se filtrará.
-        :param contour_coords_meters: Lista de coordenadas (x, y) en metros que definen el contorno del bache.
-        :return: Objeto PointCloud filtrado con solo los puntos dentro del contorno del bache.
+        Filtra puntos dentro de la región de interés definida por el polígono.
         """
-        # Crear un polígono a partir del contorno
-        polygon = Polygon(contour_coords_meters)
-        
-        # Lista para almacenar los índices de puntos dentro del contorno
-        inside_indices = []
-        
-        # Verificar cada punto en la nube de puntos
-        for i, point in enumerate(pcd.points):
-            # Crear un objeto Point con las coordenadas x, y del punto
-            point_2d = Point([point[0], point[1]])
-            
-            # Verificar si el punto está dentro del polígono del contorno
-            if polygon.contains(point_2d):
-                inside_indices.append(i)
-        
-        # Filtrar la nube de puntos para quedarse solo con los puntos dentro del contorno
-        filtered_pcd = pcd.select_by_index(inside_indices, invert=False)
-        
+        if pcd is None or contour_coords_meters is None:
+            raise ValueError("Nube de puntos o polígono de ROI no definidos")
+
+        # Crear un objeto Polygon usando contour_coords_meters
+        roi_polygon = Polygon(contour_coords_meters)
+        # Extrae los puntos como un array de numpy
+        points = np.asarray(pcd.points)
+        # Filtra los puntos usando el polígono de ROI
+        filtered_points = [point for point in points if roi_polygon.contains(Point(point[:2]))]
+
+        # Crea una nueva nube de puntos con los puntos filtrados
+        filtered_pcd = o3d.geometry.PointCloud()
+        filtered_pcd.points = o3d.utility.Vector3dVector(np.array(filtered_points))
+
+        #Ver nube de puntos
+        self.visualize_point_cloud(filtered_pcd)
+
         return filtered_pcd
 
     @staticmethod

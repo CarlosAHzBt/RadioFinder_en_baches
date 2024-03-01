@@ -80,9 +80,10 @@ if __name__ == "__main__":
 
     
     lista_baches = []
+    #lista_bag = procesador_bag.get_bag_files()
     modelo_entrenado = cargar_modelo()
 
-    #lista_bag = procesador_bag.get_bag_files()
+    
 
     #with concurrent.futures.ThreadPoolExecutor() as executor:
     #    for bag in lista_bag:
